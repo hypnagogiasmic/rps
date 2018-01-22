@@ -1,0 +1,92 @@
+<script>
+var playerScore = 0;
+var computerScore = 0;
+
+function welcomeMessage() {
+  alert("welcome to rock, paper, scissors!\nthe rules are simple:\nrock crushes scissors.\nscissors slice paper.\npaper suffocates rock.");
+}
+
+function playerPlay() {
+ var playerSelection = prompt("rock...paper...scissors...choose!");
+   if(playerSelection.toLowerCase() === "rock" || playerSelection.toLowerCase() === "paper" || playerSelection.toLowerCase() === "scissors") {
+     return playerSelection.toLowerCase();
+   }
+  alert("you typed something else or misspelled something. try again.");
+  playerPlay();
+}
+
+function computerPlay() {
+  var choices = [
+      "rock",
+      "paper",
+      "scissors"
+    ];
+    var computerSelection = choices[Math.floor(Math.random()*choices.length)];
+    return computerSelection.toLowerCase();
+}
+
+function comparePlays(play1, play2) {
+  alert("you: " + play1 + "! \ncomputer: " + play2 + "!");
+
+  if(play1 === play2) {
+    alert("tie! go again.");
+    return 0;
+  }
+
+  if(
+    (play1 === "rock" && play2 === "scissors") 
+                       ||
+    (play1 === "paper" && play2 === "rock")
+                       ||
+    (play1 === "scissors" && play2 === "paper"))
+    {
+   alert("you win the round!");
+    return 1;
+    }
+   alert("computer wins the round!");
+   return 2;
+}
+
+function updateScores(result, points) {
+    if(result === 1) {
+      playerScore += points;
+    }
+    if(result === 2) {
+      computerScore += points;
+    }
+    if(result === 0) {
+      computerScore += 0;
+      playerScore += 0;
+    }
+}
+
+function clearScores() {
+  playerScore = 0;
+  computerScore = 0;
+}
+
+function game(numOfRounds) {
+  welcomeMessage();
+  do {
+    var player = playerPlay();
+    var computer = computerPlay();
+    var result = comparePlays(player, computer);
+    updateScores(result, 1);
+    if(result !== 0) {
+      numOfRounds--;
+    }
+
+  } while(numOfRounds > 0);
+      if(playerScore > computerScore) {
+        alert("you got " + playerScore + " points and the computer got " + computerScore + ". you win! refresh the page to try again.");
+      }
+      else {
+        alert("the computer got " + computerScore + " points and you got " + playerScore + ". the computer wins! refresh the page to try again.");
+      }
+
+  clearScores();
+
+}
+
+game(3);
+</script>
